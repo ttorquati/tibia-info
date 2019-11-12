@@ -30,9 +30,11 @@ const Character = ({match}) => {
       if (name) {
         const response = await api.get(`/v2/characters/${name}.json`);
 
-        if (response.data.characters.error) {
-          setNotFound(true);
-        } else if (response.data) {
+        if (
+          response.data &&
+          response.data.characters &&
+          response.data.characters.data.name
+        ) {
           const [titleFormatted] = response.data.characters.data.title.split(
             '('
           );
@@ -41,6 +43,8 @@ const Character = ({match}) => {
             ...response.data.characters.data,
             titleFormatted,
           });
+        } else {
+          setNotFound(true);
         }
       }
       setLoading(false);
