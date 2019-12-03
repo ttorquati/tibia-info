@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import {
   FaSpinner,
@@ -26,7 +27,6 @@ const Character = ({match}) => {
     async function handleSearch() {
       setLoading(true);
       const {name} = match.params;
-
       if (name) {
         const response = await api.get(`/v2/characters/${name}.json`);
 
@@ -143,6 +143,15 @@ const Character = ({match}) => {
       )}
     </Centered>
   );
+};
+
+Character.propTypes = {
+  match: PropTypes.shape({
+    isExact: PropTypes.bool,
+    params: PropTypes.shape({}),
+    path: PropTypes.string,
+    url: PropTypes.string,
+  }).isRequired,
 };
 
 export default Character;
